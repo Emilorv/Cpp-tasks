@@ -42,7 +42,7 @@ void read_temperatures(double temperatures[], int length) {
   double temp;
   for (int i = 0; i < length; i++) {
     file >> temp;
-    cout << temp << endl;
+    cout << "Temperatur nr " << i + 1 << ": " << temp << endl;
     temperatures[i] = temp;
   }
   file.close();
