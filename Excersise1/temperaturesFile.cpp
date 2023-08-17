@@ -35,15 +35,21 @@ void read_temperatures(double temperatures[], int length) {
   const char filename[] = "temperatures.dat";
   ifstream file;
   file.open(filename);
+
+  // Error if file is unavailable
   if (!file) {
     cout << "Feil ved åpning av fil" << endl;
     exit(EXIT_FAILURE);
   }
+
+  // Writes from file to temperatures[]
   double temp;
   for (int i = 0; i < length; i++) {
     file >> temp;
     cout << "Temperatur nr " << i + 1 << ": " << temp << endl;
     temperatures[i] = temp;
   }
+
+  // Closes file
   file.close();
 }
