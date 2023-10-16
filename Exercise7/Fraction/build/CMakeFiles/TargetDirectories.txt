@@ -1,0 +1,3 @@
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise7/Fraction/build/CMakeFiles/fraction.dir
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise7/Fraction/build/CMakeFiles/edit_cache.dir
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise7/Fraction/build/CMakeFiles/rebuild_cache.dir
