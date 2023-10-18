@@ -19,6 +19,6 @@ int main() {
   print("5 - fraction2 = ", 5 - fraction2);
 
   print("5-3-fraction1-7-fraction2 = ", 5 - 3 - fraction1 - 7 - fraction2);
-  // Tolkes som (((5-3)-fraction1)-7)-fraction2) = 2-(1/2)-7-(3/4) = 6/4-28/4-3/4 = -25/4
+  // Tolkes som (((5-3)-fraction1)-7)-fraction2) = (((2-(1/2))-7)-(3/4)) = 6/4-28/4-3/4 = -25/4
   // Både (integer - fraction), (fraction - integer) og (fraction - fraction) versjonene av operator- blir brukt.
 }
