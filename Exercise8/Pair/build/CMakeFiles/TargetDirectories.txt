@@ -1,0 +1,3 @@
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/build/CMakeFiles/Pair.dir
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/build/CMakeFiles/edit_cache.dir
+/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/build/CMakeFiles/rebuild_cache.dir
