@@ -29,7 +29,7 @@ bool equal(double a, double b) {
 int main() {
   print("Sjekk integer likhet: ", "");
   int number1 = 5;
-  int number2 = 0;
+  int number2 = 4;
   print("Tall1: ", number1);
   print("Tall2: ", number2);
   print("Like?: ", equal(number1, number2));
