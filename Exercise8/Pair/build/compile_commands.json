@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/build",
-  "command": "/usr/bin/c++    -std=c++1y -Wall -Wextra -o CMakeFiles/Pair.dir/main.cpp.o -c /home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/main.cpp",
-  "file": "/home/emil/Programmer/Øvinger/Cpp-tasks/Exercise8/Pair/main.cpp",
-  "output": "CMakeFiles/Pair.dir/main.cpp.o"
-}
-]
