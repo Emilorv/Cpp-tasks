@@ -69,5 +69,5 @@ int main() {
   }
 
   replace_copy_if(v1.begin(), v1.end(), v1.begin(), isOdd, 100);
-  print("Replacing odd numbers with " 100 " in v1: ", v1);
+  print("Replacing odd numbers with '100' in v1: ", v1);
 }
