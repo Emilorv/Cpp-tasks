@@ -124,11 +124,18 @@ public:
   Ground ground;
   Sphere ground_sphere, falling_sphere;
   std::vector<Cube> cubes;
+  const btVector3 initial_falling_sphere_position = btVector3(0.9, 3.0, 0.0);
+  btVector3 falling_sphere_position = initial_falling_sphere_position;
 
   World() : dispatcher(&collision_configuration),
             dynamics(&dispatcher, &broadphase, &solver, &collision_configuration),
             cubes(6) {
     dynamics.setGravity(btVector3(0, -10.0, 0));
+
+    worldInit(falling_sphere_position);
+  }
+
+  void worldInit(btVector3 initial_falling_sphere_position) {
 
     // Add objects to the physics engine
     dynamics.addRigidBody(&ground.body);
@@ -143,12 +150,11 @@ public:
     transform.setIdentity();
     transform.setOrigin(btVector3(0.0, 0.0, 0.0));
     ground.body.setCenterOfMassTransform(transform);
-
     // Position spheres
     transform.setOrigin(btVector3(1.0, 0.1, 0.0));
     ground_sphere.body.setCenterOfMassTransform(transform);
 
-    transform.setOrigin(btVector3(0.9, 3.0, 0.0));
+    transform.setOrigin(initial_falling_sphere_position);
     falling_sphere.body.setCenterOfMassTransform(transform);
 
     // Position cubes
@@ -164,6 +170,23 @@ public:
     cubes[4].body.setCenterOfMassTransform(transform);
     transform.setOrigin(btVector3(-1.0, 0.5, 0.0));
     cubes[5].body.setCenterOfMassTransform(transform);
+  }
+
+  void reset() {
+    cubes.clear();
+    cubes.resize(6);
+
+    for (int i = dynamics.getNumCollisionObjects() - 1; i >= 0; i--) {
+      btCollisionObject *obj = dynamics.getCollisionObjectArray()[i];
+      dynamics.removeCollisionObject(obj);
+      delete obj;
+    }
+    ground = Ground();
+    falling_sphere = Sphere();
+    ground_sphere = Sphere();
+
+    std::cout << dynamics.getNumCollisionObjects() << std::endl;
+    worldInit(initial_falling_sphere_position);
   }
 
   void draw() {
@@ -226,6 +249,7 @@ public:
     auto last_time = std::chrono::system_clock::now();
     bool running = true;
     bool startTimer = false;
+    int number = 0;
     while (running) {
       // Handle events
       sf::Event event;
@@ -241,29 +265,36 @@ public:
           running = false;
         }
       }
-
-      float horizontal_position = 1;
-      float vertical_position = 3;
+      float horizontal_position = world.falling_sphere_position.x();
+      float vertical_position = world.falling_sphere_position.y();
 
       ImGui::SFML::Update(window, delta_clock.restart());
 
       ImGui::Begin("ImGui");
       if (ImGui::Button("Restart game")) {
         startTimer = false;
-        world = World();
+        world.reset();
+        /* horizontal_position = world.initial_falling_sphere_position.x();
+         vertical_position = world.initial_falling_sphere_position.y();
+         world.initPositions(world.initial_falling_sphere_position);*/
       }
       if (ImGui::Button("Drop ball")) {
+        last_time = std::chrono::system_clock::now();
         startTimer = true;
         // Implementation needed
       }
       if (ImGui::SliderFloat("Horizontal ball position", &horizontal_position, 0.0, 10.0)) {
+        startTimer = false;
         btTransform transform;
-        transform.setOrigin(btVector3(horizontal_position, vertical_position, 0.0));
+        world.falling_sphere_position.setX(horizontal_position);
+        transform.setOrigin(world.falling_sphere_position);
         world.falling_sphere.body.setCenterOfMassTransform(transform);
       }
       if (ImGui::VSliderFloat("Vertical ball position", {20, 100}, &vertical_position, 0.0, 10.0)) {
+        startTimer = false;
         btTransform transform;
-        transform.setOrigin(btVector3(horizontal_position, vertical_position, 0.0));
+        world.falling_sphere_position.setY(vertical_position);
+        transform.setOrigin(world.falling_sphere_position);
         world.falling_sphere.body.setCenterOfMassTransform(transform);
       }
       ImGui::End();
@@ -279,6 +310,8 @@ public:
         auto time = std::chrono::system_clock::now();
         world.dynamics.stepSimulation(std::chrono::duration<float>(time - last_time).count());
         last_time = time;
+        number++;
+        // std::cout << "Check " << number << std::endl;
       }
 
       world.draw();
